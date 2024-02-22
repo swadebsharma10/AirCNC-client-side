@@ -1,11 +1,11 @@
-
+import Navbar from "../components/Shared/Navbar/Navbar";
 
 const Main = () => {
-    return (
-        <div>
-           <h3>This is Main</h3> 
-        </div>
-    );
+  return (
+    <div>
+      <Navbar />
+    </div>
+  );
 };
 
 export default Main;
