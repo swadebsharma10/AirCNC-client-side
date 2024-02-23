@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AuthContext } from '../../../Provider/AuthProvider';
+import { AuthContext } from '../../../Context/AuthProvider';
 import userLogo from '../../../assets/images/user.png';
 
 const Avatar = () => {

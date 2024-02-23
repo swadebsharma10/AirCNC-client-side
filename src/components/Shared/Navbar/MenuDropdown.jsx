@@ -5,11 +5,20 @@ import { AuthContext } from '../../../Context/AuthProvider'
 import Avatar from './Avatar'
 
 const MenuDropdown = () => {
-  const { user, logOut } = useContext(AuthContext)
+  const { user, logOutUser } = useContext(AuthContext)
   const [isOpen, setIsOpen] = useState(false)
   const toggleOpen = useCallback(() => {
     setIsOpen(value => !value)
   }, []);
+
+
+const handleLogOut =()=>{
+  logOutUser()
+  .then(()=>{})
+  .catch(error =>{
+    console.log(error.message)
+  })
+}
 
   return (
     <div className='relative'>
@@ -38,7 +47,7 @@ const MenuDropdown = () => {
             </Link>
             {user ? (
               <div
-                onClick={logOut}
+                onClick={handleLogOut}
                 className='px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer'
               >
                 Logout

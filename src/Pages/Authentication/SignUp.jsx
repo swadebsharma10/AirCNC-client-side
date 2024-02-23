@@ -1,9 +1,52 @@
 
-import { Link } from 'react-router-dom'
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../../Context/AuthProvider';
+import Google from './Google';
 
-import { FcGoogle } from 'react-icons/fc'
 
 const SignUp = () => {
+ 
+  // console.log(imageApi)
+  const { createUser} = useContext(AuthContext);
+
+  const handleSubmit = event =>{
+    event.preventDefault();
+    const form = event.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+ 
+    // Image upload Bellow
+    const photo = form.image.files[0];
+    const formData = new FormData();
+    formData.append('photo', photo);
+    const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_imageBb_API}`
+   fetch(url, {
+    method:'POST',
+    body: formData
+   })
+   .then(res => res.json())
+   .then(data => {
+    console.log(data)
+   })
+
+   console.log(name, email, password)
+
+
+
+    createUser(email, password)
+    .then(result =>{
+      const user = result.user;
+      console.log('reg', user)
+    })
+    .catch(error =>{
+      console.log(error.message)
+    })
+  }
+
+
+
   return (
     <div className='flex justify-center items-center min-h-screen'>
       <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
@@ -12,8 +55,7 @@ const SignUp = () => {
           <p className='text-sm text-gray-400'>Welcome to AirCNC</p>
         </div>
         <form
-          noValidate=''
-          action=''
+        onSubmit={handleSubmit}
           className='space-y-6 ng-untouched ng-pristine ng-valid'
         >
           <div className='space-y-4'>
@@ -27,7 +69,6 @@ const SignUp = () => {
                 id='name'
                 placeholder='Enter Your Name Here'
                 className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
-                data-temp-mail-org='0'
               />
             </div>
             <div>
@@ -89,11 +130,7 @@ const SignUp = () => {
           </p>
           <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
         </div>
-        <div className='flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer'>
-          <FcGoogle size={32} />
-
-          <p>Continue with Google</p>
-        </div>
+        <Google/>
         <p className='px-6 text-sm text-center text-gray-400'>
           Already have an account?{' '}
           <Link
