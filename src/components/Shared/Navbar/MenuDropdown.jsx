@@ -1,7 +1,7 @@
 import { useCallback, useContext, useState } from 'react'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
-import { AuthContext } from '../../../Provider/AuthProvider'
+import { AuthContext } from '../../../Context/AuthProvider'
 import Avatar from './Avatar'
 
 const MenuDropdown = () => {
