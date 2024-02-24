@@ -1,4 +1,5 @@
 
+import { updateProfile } from 'firebase/auth';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider';
@@ -7,7 +8,6 @@ import Google from './Google';
 
 const SignUp = () => {
  
-  // console.log(imageApi)
   const { createUser} = useContext(AuthContext);
 
   const handleSubmit = event =>{
@@ -18,9 +18,9 @@ const SignUp = () => {
     const password = form.password.value;
  
     // Image upload Bellow
-    const photo = form.image.files[0];
+    const image = form.image.files[0];
     const formData = new FormData();
-    formData.append('photo', photo);
+    formData.append('image', image);
     const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_imageBb_API}`
    fetch(url, {
     method:'POST',
@@ -28,21 +28,28 @@ const SignUp = () => {
    })
    .then(res => res.json())
    .then(data => {
-    console.log(data)
-   })
+    const imageUrl = data.data.display_url;
 
-   console.log(name, email, password)
-
-
-
+    // create User
     createUser(email, password)
     .then(result =>{
       const user = result.user;
-      console.log('reg', user)
+      // Update user
+      updateProfile(user, {
+        displayName: name,
+        photoURL: imageUrl
+      })
+      .then(() => {
+        console.log('Use Update and signup')
+      }).catch((error) => {
+        console.log(error.message)
+      });
     })
     .catch(error =>{
       console.log(error.message)
     })
+    
+   })  
   }
 
 
