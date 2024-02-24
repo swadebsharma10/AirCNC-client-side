@@ -1,11 +1,15 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { useContext } from 'react'
+import toast from 'react-hot-toast'
 import { AuthContext } from '../../Context/AuthProvider'
 import Google from './Google'
 
 const Login = () => {
   const { signUser} = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/'
  
   const handleSubmit = event =>{
     event.preventDefault();
@@ -16,10 +20,11 @@ const Login = () => {
     signUser(email, password)
     .then(result =>{
       const user = result.user;
-      console.log('log', user)
+      toast.success(`Successfully user ${user.displayName} Login `)
+      navigate(from, {replace: true})
     })
     .catch(error =>{
-      console.log(error.message)
+      toast.error(`This didn't work ${error.message}`)
     })
   }
 

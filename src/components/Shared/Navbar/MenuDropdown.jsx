@@ -1,4 +1,5 @@
 import { useCallback, useContext, useState } from 'react'
+import toast from 'react-hot-toast'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../../Context/AuthProvider'
@@ -14,7 +15,9 @@ const MenuDropdown = () => {
 
 const handleLogOut =()=>{
   logOutUser()
-  .then(()=>{})
+  .then(()=>{
+    toast.success('User logOut Successfully')
+  })
   .catch(error =>{
     console.log(error.message)
   })

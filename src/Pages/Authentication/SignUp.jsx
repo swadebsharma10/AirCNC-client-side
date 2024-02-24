@@ -1,13 +1,14 @@
 
 import { updateProfile } from 'firebase/auth';
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider';
 import Google from './Google';
 
 
 const SignUp = () => {
- 
+  const navigate = useNavigate();
   const { createUser} = useContext(AuthContext);
 
   const handleSubmit = event =>{
@@ -40,13 +41,14 @@ const SignUp = () => {
         photoURL: imageUrl
       })
       .then(() => {
-        console.log('Use Update and signup')
+        toast.success('Successfully User Signup')
+        navigate('/login')
       }).catch((error) => {
-        console.log(error.message)
+        toast.error(error.message);
       });
     })
     .catch(error =>{
-      console.log(error.message)
+      toast.error(error.message);
     })
     
    })  
