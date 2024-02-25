@@ -1,6 +1,7 @@
 import Container from "../../components/Shared/Container/Container";
 import Header from "../Home/Rooms/Header";
 import RoomInfo from "./RoomInfo/RoomInfo";
+import RoomReservation from "./RoomReservation";
 
 const RoomDetails = () => {
   return (
@@ -10,7 +11,9 @@ const RoomDetails = () => {
           <Header />
           <div className="grid grid-cols-1 md:grid-cols-7 md:gap-10 mt-5">
             <RoomInfo />
-            <div>Reservation</div>
+           <div className="mb-10 md:col-span-3 order-first md:order-last">
+           <RoomReservation/>
+           </div>
           </div>
           
         </div>
