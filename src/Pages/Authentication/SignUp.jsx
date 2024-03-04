@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider';
+import saveUser from '../../api/auth';
 import Google from './Google';
 
 
@@ -42,6 +43,8 @@ const SignUp = () => {
       })
       .then(() => {
         toast.success('Successfully User Signup')
+        // Send User To Db
+        saveUser(result.user)
         navigate('/login')
       }).catch((error) => {
         toast.error(error.message);

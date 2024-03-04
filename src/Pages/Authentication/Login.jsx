@@ -21,6 +21,7 @@ const Login = () => {
     .then(result =>{
       const user = result.user;
       toast.success(`Successfully user ${user.displayName} Login `)
+      
       navigate(from, {replace: true})
     })
     .catch(error =>{

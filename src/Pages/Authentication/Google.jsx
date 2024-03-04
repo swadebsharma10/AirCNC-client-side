@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { AuthContext } from "../../Context/AuthProvider";
+import saveUser from "../../api/auth";
 
 const Google = () => {
     const {googleLogin} = useContext(AuthContext);
@@ -10,6 +11,8 @@ const Google = () => {
       googleLogin()
       .then(result =>{
         const user = result.user;
+        // Send User To Db
+        saveUser(user)
         console.log(user)
       })
       .catch(error =>{
